@@ -34,7 +34,7 @@ def main():
         RFC_model = load('modele_rfc.sav')
         y_pred_prob = RFC_model.predict_proba(indices)
         result = np.where(y_pred_prob<0.13,0,1)
-        prediction = result[0][0]
+        predictions = result[0][0]
         if predictions == 1:
             CQ_result = "conforme"
         else:
@@ -60,7 +60,7 @@ def main():
 
         ## machine_learning_classification ##
         st.write('Pour le modèle de machine learning classification (RFC) : \n')
-        st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices_list)))
+        st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
 
 
 #####  get the error :
