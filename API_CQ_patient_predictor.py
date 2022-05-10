@@ -25,7 +25,6 @@ def main():
     for elm in indices:
         indices_list.append(float(elm))
 
-    indices_list
     test = np.array(indices_list)
     indices = test.reshape(1, -1)
 
