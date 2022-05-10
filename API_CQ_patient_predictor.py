@@ -35,9 +35,9 @@ def main():
         result = np.where(y_pred_prob<0.13,0,1)
         predictions = result[0][0]
         if predictions == 1:
-            CQ_result = "conforme"
+            CQ_result = "Conforme"
         else:
-            CQ_result = "non-conforme"
+            CQ_result = "Non-conforme"
         return CQ_result
 
     def machine_learning_regression(indices):
