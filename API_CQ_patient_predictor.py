@@ -58,7 +58,7 @@ def main():
         pred = None
 
         ## machine_learning_classification ##
-        st.write('Pour le modèle de machine learning classification (RFC) : \n')
+        st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
         st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
 
 
