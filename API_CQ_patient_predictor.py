@@ -62,7 +62,7 @@ def main():
         
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
-        print('Error is: ' + str(e))
+        print(e)
 
 #####  get the error :
 
