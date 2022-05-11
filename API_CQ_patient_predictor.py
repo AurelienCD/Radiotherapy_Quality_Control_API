@@ -60,8 +60,8 @@ def main():
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
             st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
         
-        except:
-            st.write("Problème de modélisation, better call ACD")
+    except:
+        st.write("Problème de modélisation, better call ACD")
 
 
 #####  get the error :
