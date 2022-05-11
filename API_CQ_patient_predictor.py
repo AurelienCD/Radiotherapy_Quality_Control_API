@@ -1,15 +1,8 @@
 import streamlit as st
-
-
 import pandas as pad 
 import numpy as np
-
-## nettoyage
 from sklearn.ensemble import RandomForestClassifier
-
 from joblib import dump, load
-
-
 
 def main():
     """ fonction principale de prédiction de conformité des CQ patient """    
