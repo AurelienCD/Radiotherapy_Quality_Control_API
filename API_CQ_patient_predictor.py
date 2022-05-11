@@ -61,7 +61,7 @@ def main():
             st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
         
     except:
-        st.write("Problème de modélisation, better call ACD")
+        st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
 
 
 #####  get the error :
