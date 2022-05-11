@@ -32,7 +32,7 @@ def main():
     def machine_learning_classification(indices):
         RFC_model = load('modele_rfc.sav')
         y_pred_prob = RFC_model.predict_proba(indices)
-        result = np.where(y_pred_prob[:,0]<0.30,0,1)
+        result = np.where(y_pred_prob[:,0]>0.30,0,1)
         predictions = result[0]
         if predictions == 1:
             CQ_result = "Conforme"
