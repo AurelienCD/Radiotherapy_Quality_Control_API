@@ -62,7 +62,7 @@ def main():
         
     except BaseException as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
-        logger.error('Error is: ' + str(e))
+        print('Error is: ' + str(e))
 
 #####  get the error :
 
