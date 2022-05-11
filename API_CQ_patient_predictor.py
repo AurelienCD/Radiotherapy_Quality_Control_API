@@ -36,8 +36,10 @@ def main():
         predictions = result[0]
         if predictions == 1:
             CQ_result = "Conforme"
-        else:
+        elif predictions == 0:
             CQ_result = "Non-conforme"
+        else:
+            CQ_result = "Problème de modélisation, better call ACD"
         return CQ_result
 
     def machine_learning_regression(indices):
