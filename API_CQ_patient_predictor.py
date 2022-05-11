@@ -9,7 +9,7 @@ def main():
 
     st.title('Prédiction du résultat du contrôle qualité patient')
 
-    post = st.text_input("Rentrer les indices de complexité (dans le même format que l'exemple ci-dessous) : ", "0.4633   0.1076  0.0859  0.1338  0.8025  40.4710")
+    post = st.text_input("Rentrer les indices de complexité (dans le même format que l'exemple ci-dessous, avec SAS10	MCSv	LT	LTMCS	AAV	LSV) : ", "0.4633   0.1076  0.0859  0.1338  0.8025  40.4710")
     indices = post
 
     
