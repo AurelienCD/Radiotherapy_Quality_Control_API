@@ -21,7 +21,9 @@ def main():
     test = np.array(indices_list)
     indices = test.reshape(1, -1)
 
-
+    StandardScaler = load('StandardScaler.joblib')
+    indices = StandardScaler.transform(indices)
+    
     def machine_learning_classification(indices):
         RFC_model = load('modele_rfc.sav')
         y_pred_prob = RFC_model.predict_proba(indices)
