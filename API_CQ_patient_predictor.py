@@ -32,7 +32,7 @@ def main():
         for elm in indices[0]:
             indices_finale.append(float(elm))
             
-        def machine_learning_classification(indices):
+        def machine_learning_classification(indices_finale):
             RFC_model = load('model_rfc_16052022.sav')
             y_pred_prob = RFC_model.predict_proba(indices)
             result = np.where(y_pred_prob[:,0]>0.30,0,1)
