@@ -61,7 +61,7 @@ def main():
 
             ## machine_learning_classification ##
             st.write(post[:6])
-            st.write(post[5:11)
+            st.write(post[5:11])
             st.write(type(test))
             st.write(str(len(indices)))
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
