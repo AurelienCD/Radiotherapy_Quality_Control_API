@@ -16,7 +16,8 @@ def main():
     
     try:
         ## Préparation des données
-        indices = indices.split(' ')
+        indices = indices.split()
+        indices = indices.split()
         indices_list = []
         for elm in indices:
             indices_list.append(float(elm))
