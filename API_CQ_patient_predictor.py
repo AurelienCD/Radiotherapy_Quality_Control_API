@@ -60,12 +60,12 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write(str(indice))
+            st.write(str(indices))
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
             st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
         
     except Exception as e:
-        st.write(str(indices))
+        st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
         st.write("Message d'erreur : " + str(e))
 
 #####  get the error :
