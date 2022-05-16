@@ -28,7 +28,7 @@ def main():
             indices_list.append(float(elm))
             
         StandardScaler = load('StandardScaler.joblib')
-        indices = StandardScaler.transform(indices)
+        indices = StandardScaler.transform(indices_list)
 
         def machine_learning_classification(indices):
             RFC_model = load('model_rfc_16052022.sav')
