@@ -18,7 +18,7 @@ def main():
         ## Préparation des données
         indices = indices.split()
         indices_list = []
-        for elm in post:
+        for elm in indices:
             indices_list.append(float(elm))
 
         test = np.array(indices_list)
