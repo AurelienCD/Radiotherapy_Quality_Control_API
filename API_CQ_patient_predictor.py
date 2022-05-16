@@ -23,13 +23,15 @@ def main():
 
         test = np.array(indices_list)
         indices = test.reshape(1, -1)
-        
-        for elm in indices[0]:
-            indices_list.append(float(elm))
+
             
         StandardScaler = load('StandardScaler.joblib')
-        indices = StandardScaler.transform(indices_list)
-
+        indices = StandardScaler.transform(indices)
+        
+        indices_finale = []
+        for elm in indices[0]:
+            indices_finale.append(float(elm))
+            
         def machine_learning_classification(indices):
             RFC_model = load('model_rfc_16052022.sav')
             y_pred_prob = RFC_model.predict_proba(indices)
@@ -63,7 +65,7 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write(indices)
+            st.write(indices_finale)
             st.write(indices[0])
             st.write(indices[0][0])
             st.write(indices[0][1])
