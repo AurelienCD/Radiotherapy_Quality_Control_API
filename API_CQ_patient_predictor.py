@@ -62,7 +62,8 @@ def main():
             ## machine_learning_classification ##
             st.write(indices)
             st.write(indices[0])
-            st.write(indices[1])
+            st.write(indices[0][0])
+            st.write(indices[0][1])
             st.write(str(len(indices)))
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
             st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
