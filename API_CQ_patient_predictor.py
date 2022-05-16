@@ -18,12 +18,15 @@ def main():
         ## Préparation des données
         indices = indices.split()
         indices_list = []
-        for elm in indices[0]:
+        for elm in indices:
             indices_list.append(float(elm))
 
         test = np.array(indices_list)
         indices = test.reshape(1, -1)
-
+        
+        for elm in indices[0]:
+            indices_list.append(float(elm))
+            
         StandardScaler = load('StandardScaler.joblib')
         indices = StandardScaler.transform(indices)
 
