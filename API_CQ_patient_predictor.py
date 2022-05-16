@@ -60,7 +60,7 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write(post[:6)
+            st.write(post[:6])
             st.write(post[5:11)
             st.write(type(test))
             st.write(str(len(indices)))
