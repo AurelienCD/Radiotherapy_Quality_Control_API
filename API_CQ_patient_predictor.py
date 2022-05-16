@@ -28,7 +28,7 @@ def main():
         indices = StandardScaler.transform(indices)
 
         def machine_learning_classification(indices):
-            RFC_model = load('model_rfc_11052022_v2.sav')
+            RFC_model = load('model_rfc_11052022.sav')
             y_pred_prob = RFC_model.predict_proba(indices)
             result = np.where(y_pred_prob[:,0]>0.30,0,1)
             predictions = result[0]
