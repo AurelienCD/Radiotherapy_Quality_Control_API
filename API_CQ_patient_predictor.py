@@ -23,7 +23,7 @@ def main():
     indices = post
     label = "Sélectionner la localisation tumorale"
     options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
-    st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
+    localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
     
     try:
         ## Préparation des données
