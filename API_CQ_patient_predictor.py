@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from joblib import dump, load
 from PIL import Image
+from termcolor import colored
             
 ## TO DO #######
 ## liste déroulante pour choisir la localisation
@@ -83,7 +84,7 @@ def main():
 
             ## machine_learning_classification ##
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + machine_learning_classification(indices))          
+            st.write('Le résultat du CQ est : ' + colored(machine_learning_classification(indices), "green"))          
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
         
     except Exception as e:
