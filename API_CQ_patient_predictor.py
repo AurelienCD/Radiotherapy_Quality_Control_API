@@ -21,7 +21,9 @@ def main():
     
     post = st.text_input("(dans le même format que l'exemple ci-dessous, avec SAS10	MCSv	LT	LTMCS	AAV	LSV) : ", "0.4633   0.1076  0.0859  0.1338  0.8025  40.4710")
     indices = post
-
+    label = "Sélectionner la localisation tumorale"
+    options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
+    st.radio(label, options, index=0, format_func=special_internal_function, key=None, help=None, on_change=None, args=None, kwargs=None, *, disabled=False)
     
     try:
         ## Préparation des données
