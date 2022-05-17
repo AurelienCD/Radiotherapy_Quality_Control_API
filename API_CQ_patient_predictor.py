@@ -84,10 +84,8 @@ def main():
 
             ## machine_learning_classification ##
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + machine_learning_classification(indices))
-         
-            results = '<font color=‘red’>str(machine_learning_classification(indices))</font>'
-            st.write(results, unsafe_allow_html=True)
+            st.write('Le résultat du CQ est : ' + machine_learning_classification(indices))       
+            st.success('Le résultat est conforme !')
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
 
     except Exception as e:
