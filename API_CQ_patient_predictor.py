@@ -74,12 +74,12 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')    
+            st.write('Pour le modèle de machine learning (RandomForestClassifier) : \n')    
             if machine_learning_classification(indices) == "Conforme":
                         st.success('Le résultat est Conforme !')
             elif machine_learning_classification(indices) == "Non-conforme":
                         st.warning('Le résultat est Non-conforme !')                       
-            st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
+            st.image(image_ML, caption='ROC curve and confusion matrix for the RandomForestClassifier')
 
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
