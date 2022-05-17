@@ -83,7 +83,7 @@ def main():
 
             ## machine_learning_classification ##
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))          
+            st.write('Le résultat du CQ est : ' + machine_learning_classification(indices))          
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
         
     except Exception as e:
