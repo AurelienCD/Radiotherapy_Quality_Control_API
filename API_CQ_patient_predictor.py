@@ -53,7 +53,7 @@ def main():
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
                 
-            list_result = [y_pred_prob, result, CQ_result]
+            list_result = CQ_result
             return list_result
 
         def machine_learning_regression(indices):
