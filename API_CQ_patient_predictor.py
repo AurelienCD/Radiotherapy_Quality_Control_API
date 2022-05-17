@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from joblib import dump, load
 from PIL import Image
-from termcolor import colored
             
 ## TO DO #######
 ## liste déroulante pour choisir la localisation
