@@ -4,6 +4,12 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from joblib import dump, load
 
+## TO DO #######
+## liste déroulante pour choisir la localisation
+## quand on choisit la loc alors les matrices de confusion et les courbes AUC apparaissent en fonction
+## Mettre la valeur de l'AUC en fonction de la loc dans la liste déroulante
+
+
 def main():
     """ fonction principale de prédiction de conformité des CQ patient """    
 
