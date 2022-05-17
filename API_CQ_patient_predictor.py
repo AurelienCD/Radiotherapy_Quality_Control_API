@@ -55,7 +55,7 @@ def main():
             result = np.where(y_pred_prob[:,0]>0.30,0,1)
             predictions = result[0]
             if predictions == 1:
-                CQ_result = "Le résultat du CQ est : " + color.BOLD + 'Conforme' + color.BLUE
+                CQ_result = "Le résultat du CQ est : " + color.BOLD + 'Conforme' + color.GREEN
             elif predictions == 0:
                 CQ_result = "Non-conforme"
             else:
