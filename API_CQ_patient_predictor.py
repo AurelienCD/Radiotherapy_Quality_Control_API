@@ -12,14 +12,6 @@ from termcolor import colored
 ## Mettre la valeur de l'AUC en fonction de la loc dans la liste déroulante
 
 
-class color:
-   """ Formattage des couleurs des résultats """
-   GREEN = '\033[92m'
-   RED = '\033[91m'
-   BOLD = '\033[1m'
-   UNDERLINE = '\033[4m'
-   END = '\033[0m'
-
 def main():
     """ fonction principale de prédiction de conformité des CQ patient """    
 
@@ -83,9 +75,11 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + machine_learning_classification(indices))       
-            st.success('Le résultat est ' + machine_learning_classification(indices) + ' !')
+            st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')    
+            if machine_learning_classification(indices) == "Conforme":
+                        st.success('Le résultat est Conforme !')
+            else machine_learning_classification(indices) == "Non-conforme":
+                        st.warning('Le résultat est Non-conforme !')                       
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
 
     except Exception as e:
