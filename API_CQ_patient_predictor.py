@@ -3,7 +3,8 @@ import pandas as pad
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from joblib import dump, load
-
+from PIL import Image
+            
 ## TO DO #######
 ## liste déroulante pour choisir la localisation
 ## quand on choisit la loc alors les matrices de confusion et les courbes AUC apparaissent en fonction
@@ -13,6 +14,8 @@ from joblib import dump, load
 def main():
     """ fonction principale de prédiction de conformité des CQ patient """    
 
+    image_ML = Image.open('image_ML.png')
+    
     st.title('Prédiction du résultat du contrôle qualité patient')
     st.write("Rentrer les indices de complexité")
     
@@ -76,7 +79,8 @@ def main():
             st.write(indices[0][0])
             st.write(indices[0][1])
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))
+            st.write('Le résultat du CQ est : ' + str(machine_learning_classification(indices)))          
+            st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
         
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
