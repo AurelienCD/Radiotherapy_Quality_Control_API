@@ -84,9 +84,10 @@ def main():
 
             ## machine_learning_classification ##
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')
-            st.write('Le résultat du CQ est : ' + colored(machine_learning_classification(indices), "green"))          
+            st.write('Le résultat du CQ est : ' + colored(machine_learning_classification(indices), "green"))    
+            st.write('Le résultat du CQ est : ' + (<font color=‘red’>machine_learning_classification(indices)</font>, unsafe_allow_html=True))) 
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
-        
+
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
         st.write("Message d'erreur : " + str(e))
