@@ -11,7 +11,7 @@ from PIL import Image
 ## Mettre la valeur de l'AUC en fonction de la loc dans la liste déroulante
 
 
-class bold_color:
+class color:
    """ Formattage des couleurs des résultats """
    GREEN = '\033[92m'
    RED = '\033[91m'
