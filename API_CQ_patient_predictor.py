@@ -76,6 +76,7 @@ def main():
 
             ## machine_learning_classification ##
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')    
+            st.write('res' + machine_learning_classification(indices))
             if machine_learning_classification(indices) == "Conforme":
                         st.success('Le résultat est Conforme !')
             elif machine_learning_classification(indices) == "Non-conforme":
