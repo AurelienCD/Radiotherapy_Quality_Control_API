@@ -78,7 +78,7 @@ def main():
             st.write('Pour le modèle de machine learning classification (RandomForestClassifier) : \n')    
             if machine_learning_classification(indices) == "Conforme":
                         st.success('Le résultat est Conforme !')
-            else machine_learning_classification(indices) == "Non-conforme":
+            elif machine_learning_classification(indices) == "Non-conforme":
                         st.warning('Le résultat est Non-conforme !')                       
             st.image(image_ML, caption='ROC curve and confusion matrice for the RandomForestClassifier')
 
