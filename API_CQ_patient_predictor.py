@@ -3,6 +3,7 @@ import pandas as pad
 import numpy as np
 from joblib import dump, load
 from PIL import Image
+import sklearn
             
 ## TO DO #######
 ## add deep hybride learning model
