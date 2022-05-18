@@ -77,7 +77,7 @@ def main():
             pred = None
 
             ## machine_learning_classification ##
-            st.write('Pour le modèle de machine learning (RandomForestClassifier) : \n')    
+            st.write('Pour le modèle de Machine Learning : \n')    
             if machine_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
                         st.success('Le résultat est Conforme !')
             elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
