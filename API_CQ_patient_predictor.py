@@ -58,17 +58,11 @@ def main():
             list_result = CQ_result
             return list_result
 
-        def machine_learning_regression(indices):
+
+        def deep_hybride_learning_classification(indices):
             """to develop"""
             return predictions
 
-        def deep_learning_classification(indices):
-            """to develop"""
-            return predictions
-
-        def deep_learning_regression(indices):
-            """to develop"""
-            return predictions
 
 
         predict_btn = st.button('Prédire')
