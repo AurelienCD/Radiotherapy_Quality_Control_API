@@ -55,8 +55,7 @@ def main():
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
                 
-            list_result = CQ_result
-            return list_result
+            return CQ_result
 
 
         def deep_hybride_learning_classification(indices):
