@@ -82,7 +82,7 @@ def main():
                         st.success('Le résultat est Conforme !')
             elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
                         st.warning('Le résultat est Non-conforme !')                       
-            if localisation == "ORL"
+            if localisation == "ORL":
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (DecisionTreeClassifier)')
             else:
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
