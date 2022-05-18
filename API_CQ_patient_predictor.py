@@ -47,7 +47,7 @@ def main():
         def machine_learning_classification(indices_finale, localisation, seuil_localisation):
             ML_model = load('model_ML_' + str(localisation) + '.sav')
             y_pred_prob = ML_model.predict_proba(indices)
-            result = np.where(y_pred_prob[:,0]>seuil_localisation,0,1)
+            result = np.where(y_pred_prob[:,0]>seuil_localisation[localisation],0,1)
             predictions = result[0]
             if predictions == 1:
                 CQ_result = "Conforme"
