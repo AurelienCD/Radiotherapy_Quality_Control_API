@@ -13,7 +13,7 @@ from PIL import Image
 def main():
     """ fonction principale de prédiction de conformité des CQ patient """    
 
-    image_ML = Image.open('image_ML.png')
+    
     
     st.title('Prédiction du résultat du contrôle qualité patient')
     st.write("Rentrer les indices de complexité")
@@ -24,7 +24,8 @@ def main():
     options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
     seuil_localisation = {"Générale": 0.25, "Pelvis": 0.4, "Sein": 0.55, "ORL": 0.3, "Crâne": 0.3, "Thorax": 0.3,}
-
+            
+    image_ML = Image.open('image_ML_' + str(localisation) +'.png')
 
     try:
         ## Préparation des données
