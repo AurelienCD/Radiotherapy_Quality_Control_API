@@ -5,9 +5,7 @@ from joblib import dump, load
 from PIL import Image
             
 ## TO DO #######
-## liste déroulante pour choisir la localisation
-## quand on choisit la loc alors les matrices de confusion et les courbes AUC apparaissent en fonction
-## Mettre la valeur de l'AUC en fonction de la loc dans la liste déroulante
+## add deep hybride learning model
 
 
 def main():
