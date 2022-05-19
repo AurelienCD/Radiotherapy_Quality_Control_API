@@ -5,7 +5,7 @@ from joblib import dump, load
 from PIL import Image
 import sklearn
 import torch    
-
+from torch.utils.data import Dataset
 from XBNet.training_utils import training,predict
 from XBNet.models import XBNETClassifier
 from XBNet.run import run_XBNET
