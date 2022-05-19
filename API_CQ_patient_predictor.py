@@ -59,10 +59,37 @@ def main():
             return CQ_result
 
 
-        def deep_hybride_learning_classification(indices):
-            """to develop"""
-            return predictions
+        def deep_hybride_learning_classification_XBNet(indices):
+            DL_XBNet_model = load('XBNet.joblib')
+            X_tensor = torch.from_numpy(indices)
+            outputs = DL_XBNet_model(X_tensor.float())
+            proba = outputs[:,:].detach().numpy()
+            #proba = outputs.cpu()[:,:].detach().numpy()
+            predictions = np.where(proba>0.50,0,1)
+            if predictions == 1:
+                CQ_result = "Conforme"
+            elif predictions == 0:
+                CQ_result = "Non-conforme"
+            else:
+                CQ_result = "Problème de modélisation, better call ACD"
+                
+            return CQ_result
 
+        def deep_AUC_learning_classification_LibAUC(indices):
+            DL_AUC_model = load('LibAUC.joblib')
+            X_tensor = torch.from_numpy(indices)
+            outputs = DL_AUC_model(X_tensor.float())
+            proba = outputs[:,:].detach().numpy()
+            #proba = outputs.cpu()[:,:].detach().numpy()
+            predictions = np.where(proba>0.20,0,1)
+            if predictions == 1:
+                CQ_result = "Conforme"
+            elif predictions == 0:
+                CQ_result = "Non-conforme"
+            else:
+                CQ_result = "Problème de modélisation, better call ACD"
+                
+            return CQ_result
 
 
         predict_btn = st.button('Prédire')
@@ -79,7 +106,12 @@ def main():
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (DecisionTreeClassifier)')
             else:
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
-
+            
+            st.write('Pour le modèle de Deep Learning XBNet: \n')
+            st.write('Le résultat du CQ est : '+ str(deep_hybride_learning_classification_XBNet(indices))
+            st.write('Pour le modèle de Deep Learning LibAUC: \n')
+            st.write('Le résultat du CQ est : '+ str(deep_AUC_learning_classification_LibAUC(indices))
+            
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
         st.write("Message d'erreur : " + str(e))
