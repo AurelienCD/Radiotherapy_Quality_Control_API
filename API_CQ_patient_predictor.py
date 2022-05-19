@@ -59,7 +59,7 @@ def main():
             return CQ_result
 
 
-        def deep_hybride_learning_classification_XBNet(indices):
+        """def deep_hybride_learning_classification_XBNet(indices):
             DL_XBNet_model = load('XBNet.joblib')
             X_tensor = torch.from_numpy(indices)
             outputs = DL_XBNet_model(X_tensor.float())
@@ -73,7 +73,7 @@ def main():
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
                 
-            return CQ_result
+            return CQ_result"""
 
         def deep_AUC_learning_classification_LibAUC(indices):
             DL_AUC_model = load('LibAUC.joblib')
@@ -108,7 +108,7 @@ def main():
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
             
             st.write('Pour le modèle de Deep Learning XBNet: \n')
-            st.write('Le résultat du CQ est : '+ str(deep_hybride_learning_classification_XBNet(indices)))
+            #st.write('Le résultat du CQ est : '+ str(deep_hybride_learning_classification_XBNet(indices)))
             st.write('Pour le modèle de Deep Learning LibAUC: \n')
             st.write('Le résultat du CQ est : '+ str(deep_AUC_learning_classification_LibAUC(indices)))
             
