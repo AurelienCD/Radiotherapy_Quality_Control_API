@@ -59,22 +59,6 @@ def main():
             return CQ_result
 
 
-        """def deep_hybride_learning_classification_XBNet(indices):
-            DL_XBNet_model = load('XBNet.joblib')
-            X_tensor = torch.from_numpy(indices)
-            outputs = DL_XBNet_model(X_tensor.float())
-            proba = outputs[:,:].detach().numpy()
-            #proba = outputs.cpu()[:,:].detach().numpy()
-            predictions = np.where(proba>0.50,0,1)
-            if predictions == 1:
-                CQ_result = "Conforme"
-            elif predictions == 0:
-                CQ_result = "Non-conforme"
-            else:
-                CQ_result = "Problème de modélisation, better call ACD"
-                
-            return CQ_result"""
-
         def deep_AUC_learning_classification_LibAUC(indices):
             DL_AUC_model = load('LibAUC.joblib')
             X_tensor = torch.from_numpy(indices)
