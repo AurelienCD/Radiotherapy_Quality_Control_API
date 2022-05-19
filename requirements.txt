@@ -5,4 +5,4 @@ pillow
 scikit-learn==1.0.2
 XBNet
 LibAUC
-pytorch
+torch
