@@ -11,7 +11,7 @@ from XBNet.models import XBNETClassifier
 from XBNet.run import run_XBNET
 from libauc.losses import AUCMLoss
 from libauc.optimizers import PESG
-from libauc.datasets import ImbalanceSampler
+#from libauc.datasets import ImbalanceSampler
 
 
 ## TO DO #######
