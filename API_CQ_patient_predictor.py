@@ -4,7 +4,16 @@ import numpy as np
 from joblib import dump, load
 from PIL import Image
 import sklearn
-            
+import torch    
+
+from XBNet.training_utils import training,predict
+from XBNet.models import XBNETClassifier
+from XBNet.run import run_XBNET
+from libauc.losses import AUCMLoss
+from libauc.optimizers import PESG
+from libauc.datasets import ImbalanceSampler
+
+
 ## TO DO #######
 ## add deep hybride learning model
 
@@ -57,6 +66,24 @@ def main():
                 CQ_result = "Problème de modélisation, better call ACD"
                 
             return CQ_result
+
+
+        def deep_hybride_learning_classification_XBNet(indices):
+            DL_XBNet_model = load('XBNet.joblib')
+            X_tensor = torch.from_numpy(indices)
+            outputs = DL_XBNet_model(X_tensor.float())
+            proba = outputs[:,:].detach().numpy()
+            #proba = outputs.cpu()[:,:].detach().numpy()
+            predictions = np.where(proba>0.50,0,1)
+            if predictions == 1:
+                CQ_result = "Conforme"
+            elif predictions == 0:
+                CQ_result = "Non-conforme"
+            else:
+                CQ_result = "Problème de modélisation, better call ACD"
+                
+            return CQ_result
+
 
 
         def deep_AUC_learning_classification_LibAUC(indices):
