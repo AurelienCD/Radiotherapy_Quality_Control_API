@@ -108,9 +108,9 @@ def main():
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
             
             st.write('Pour le modèle de Deep Learning XBNet: \n')
-            st.write('Le résultat du CQ est : '+ str(deep_hybride_learning_classification_XBNet(indices))
+            st.write('Le résultat du CQ est : '+ str(deep_hybride_learning_classification_XBNet(indices)))
             st.write('Pour le modèle de Deep Learning LibAUC: \n')
-            st.write('Le résultat du CQ est : '+ str(deep_AUC_learning_classification_LibAUC(indices))
+            st.write('Le résultat du CQ est : '+ str(deep_AUC_learning_classification_LibAUC(indices)))
             
     except Exception as e:
         st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
