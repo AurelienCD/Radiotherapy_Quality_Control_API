@@ -4,7 +4,8 @@ import numpy as np
 from joblib import dump, load
 from PIL import Image
 import sklearn
-
+import tensorflow as tf
+from tensorflow import keras
 
 ## TO DO #######
 ## add deep hybride learning model
