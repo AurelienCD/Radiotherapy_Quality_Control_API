@@ -66,7 +66,7 @@ def main():
             y_pred_prob_DTC = ML_DTC_model.predict_proba(indices)
             result_DTC = np.where(y_pred_prob_DTC[:,0]>0.8,0,1)
             predictions_DTC = result_DTC[0]
-            df_ML = pd.DataFrame(predictions_DTC, index = ['1'], columns = ['DTC'])
+            df_ML = pad.DataFrame(predictions_DTC, index = ['1'], columns = ['DTC'])
             
             ML_KN_model = load('model_ML_KN.joblib')
             y_pred_prob_KN = ML_KN_model.predict_proba(indices)
