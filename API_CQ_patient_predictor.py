@@ -61,8 +61,32 @@ def main():
 
 
         def deep_hybride_learning_classification(indices):
-            """ to do """    
-            return CQ_result
+            ML_RFC_model = load('model_ML_RFC.sav')
+            y_pred_prob_RFC = ML_RFC_model.predict_proba(indices)
+            result_RFC = np.where(y_pred_prob_RFC[:,0]>0.25,0,1)
+            predictions_RFC = result_RFC[0]
+            df_ML = pd.DataFrame(predictions_RFC, index = ['1'], columns = ['RFC'])
+
+            ML_SVC_model = load('model_ML_SVC.joblib')
+            y_pred_prob_SVC = ML_SVC_model.predict_proba(indices)
+            result_SVC = np.where(y_pred_prob_SVC[:,0]>0.9,0,1)
+            predictions_SVC = result_SVC[0]
+            df_ML['SVC'] = predictions_SVC
+
+            ML_KN_model = load('model_ML_KN.joblib')
+            y_pred_prob_KN = ML_KN_model.predict_proba(indices)
+            result_KN = np.where(y_pred_prob_KN[:,0]>0.8,0,1)
+            predictions_KN = result_KN[0]
+            df_ML['KN'] = predictions_KN
+
+            ML_DTC_model = load('model_ML_DTC.joblib')
+            y_pred_prob_DTC = ML_DTC_model.predict_proba(indices)
+            result_DTC = np.where(y_pred_prob_DTC[:,0]>0.8,0,1)
+            predictions_DTC = result_DTC[0]
+            df_ML['DTC'] = predictions_DTC    
+            
+            
+            return df_ML
 
 
 
