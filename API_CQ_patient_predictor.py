@@ -66,8 +66,8 @@ def main():
             y_pred_prob_DTC = ML_DTC_model.predict_proba(indices)
             result_DTC = np.where(y_pred_prob_DTC[:,0]>0.8,0,1)
             predictions_DTC = result_DTC[0]
-            df_ML['DTC'] = predictions_DTC
-
+            df_ML = pd.DataFrame(predictions_DTC, index = ['1'], columns = ['DTC'])
+            
             ML_KN_model = load('model_ML_KN.joblib')
             y_pred_prob_KN = ML_KN_model.predict_proba(indices)
             result_KN = np.where(y_pred_prob_KN[:,0]>0.8,0,1)
@@ -78,7 +78,7 @@ def main():
             y_pred_prob_RFC = ML_RFC_model.predict_proba(indices)
             result_RFC = np.where(y_pred_prob_RFC[:,0]>0.25,0,1)
             predictions_RFC = result_RFC[0]
-            df_ML = pd.DataFrame(predictions_RFC, index = ['1'], columns = ['RFC'])
+            df_ML['RFC'] = predictions_RFC
 
             ML_SVC_model = load('model_ML_SVC.joblib')
             y_pred_prob_SVC = ML_SVC_model.predict_proba(indices)
@@ -90,6 +90,7 @@ def main():
             indices_tensor=tf.convert_to_tensor(df_ML)
             y_pred_prob_DHL = DHL_model.predict(indices_tensor)
             result_DHL = np.where(y_pred_prob_DHL>0.62, 1,0)
+            
 
             if result_DHL == 1:
                 CQ_result = "Conforme"
