@@ -85,6 +85,7 @@ def main():
             predictions_DTC = result_DTC[0]
             df_ML['DTC'] = predictions_DTC    
             
+            DHL_model = load('DHL_model.joblib')
             
             return df_ML
 
