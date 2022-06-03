@@ -8,7 +8,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 ## TO DO #######
-## add deep hybride learning model
+## PCA and TSNE representation
 
 
 def main():
