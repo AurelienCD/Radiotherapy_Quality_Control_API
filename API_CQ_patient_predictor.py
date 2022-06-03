@@ -114,7 +114,7 @@ def main():
                         st.success('Le résultat est Conforme !')
             elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
                         st.warning('Le résultat est Non-conforme !')                       
-            st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement en dessus de la moyenne et que le gamma index soit supérieur à 95%")
+            st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit supérieur à 95%")
             
             if localisation == "ORL":
                         st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (DecisionTreeClassifier)')
