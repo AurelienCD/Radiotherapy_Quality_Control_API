@@ -48,7 +48,7 @@ def main():
             indices_finale.append(float(elm))
             
         def machine_learning_classification(indices_finale, localisation, seuil_localisation):
-            ML_model = load('model_ML_' + str(localisation) + '.sav')
+            ML_model = load('model_ML_' + str(localisation) + '.joblib')
             y_pred_prob = ML_model.predict_proba(indices)
             result = np.where(y_pred_prob[:,0]>seuil_localisation[localisation],0,1)
             predictions = result[0]
