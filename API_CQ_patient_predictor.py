@@ -7,6 +7,7 @@ import sklearn
 import tensorflow as tf
 from tensorflow import keras
 import time
+import pyautogui
 
 ## TO DO #######
 ## PCA and TSNE representation
@@ -108,7 +109,7 @@ def main():
         predict_btn = st.button('Prédire')
         if predict_btn:
             pred = None
-                 
+            pyautogui.hotkey("ctrl","F5")     
             my_bar = st.progress(0)
             for percent_complete in range(100):
                  time.sleep(0.01)
