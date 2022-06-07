@@ -6,6 +6,7 @@ from PIL import Image
 import sklearn
 import tensorflow as tf
 from tensorflow import keras
+import time
 
 ## TO DO #######
 ## PCA and TSNE representation
@@ -107,7 +108,12 @@ def main():
         predict_btn = st.button('Prédire')
         if predict_btn:
             pred = None
-
+                 
+            my_bar = st.progress(0)
+            for percent_complete in range(100):
+                 time.sleep(0.1)
+                 my_bar.progress(percent_complete + 1)
+            
             ## machine_learning_classification ##
             st.write('Pour le modèle de Machine Learning : \n')    
             if machine_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
