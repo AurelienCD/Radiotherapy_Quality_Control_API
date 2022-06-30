@@ -31,8 +31,8 @@ def main():
     if localisation == "Crâne" or localisation == "Thorax":
         image_ML = Image.open('image_ML_' + str(localisation) +'.png')   
 
-    #if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
-        #image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
+    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
+        image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
 
 
     try:
