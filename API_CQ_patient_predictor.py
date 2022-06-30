@@ -27,7 +27,13 @@ def main():
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
     seuil_localisation = {"Générale": 0.25, "Crâne": 0.3, "Thorax": 0.3,}
     
+    if localisation == "Crâne" or localisation == "Thorax":
+        image_ML = Image.open('image_ML_' + str(localisation) +'.png')   
 
+    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
+        image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
+        
+        
     try:
         ## Préparation des données
         indices = indices.split()
@@ -156,7 +162,7 @@ def main():
                 elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
                             st.warning('Le résultat est Non-conforme !')                       
                 st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")              
-                #st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
+                st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
  
 
 
@@ -169,7 +175,7 @@ def main():
                 elif deep_hybride_learning_classification(indices,localisation, seuil_localisation) == "Non-conforme":
                             st.warning('Le résultat est Non-conforme !')                       
                 st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")                       
-                #st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
+                st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
 
             
     except Exception as e:
