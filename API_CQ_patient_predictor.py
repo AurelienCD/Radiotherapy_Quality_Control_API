@@ -27,13 +27,6 @@ def main():
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
     seuil_localisation = {"Générale": 0.25, "Crâne": 0.3, "Thorax": 0.3,}
     
-    """   
-    if localisation == "Crâne" or localisation == "Thorax":
-        image_ML = Image.open('image_ML_' + str(localisation) +'.png')   
-
-    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
-        image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
-"""
 
     try:
         ## Préparation des données
