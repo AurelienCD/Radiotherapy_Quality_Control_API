@@ -148,9 +148,9 @@ def main():
                 df_ML['SVC'] = y_pred_prob_SVC[:,0]
 
                 # Deep Learning
-                DHL_model_Générale = load('DHL_model_Générale.joblib')
+                DHL_model_all = load('DHL_model_Générale.joblib')
                 proba_tensor=tf.convert_to_tensor(df_ML)
-                y_pred_prob_DHL = DHL_model_Générale.predict(proba_tensor)
+                y_pred_prob_DHL = DHL_model_all.predict(proba_tensor)
                 result_DHL = np.where(y_pred_prob_DHL[:,1]>0.80, 1,0)
                 
                 
