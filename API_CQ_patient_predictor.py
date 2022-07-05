@@ -25,12 +25,12 @@ def main():
     label = "Sélectionner la localisation tumorale"
     options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
-    seuil_localisation = {"Générale": 0.25, "Crâne": 0.3, "Thorax": 0.3,}
+    seuil_localisation = {"Crâne": 0.3, "Thorax": 0.3,}
     
     if localisation == "Crâne" or localisation == "Thorax":
         image_ML = Image.open('image_ML_' + str(localisation) +'.png')   
 
-    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
+    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
         image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
         
         
@@ -43,8 +43,8 @@ def main():
 
         test = np.array(indices_list)
         indices = test.reshape(1, -1)
+        indices_DHL_all = indices  
 
-            
         StandardScaler = load('StandardScaler_' + str(localisation) + '.joblib')
         indices = StandardScaler.transform(indices)
         
@@ -69,7 +69,7 @@ def main():
             return CQ_result
 
 
-        def deep_hybride_learning_classification(indices, localisation, seuil_localisation):
+        def deep_hybride_learning_classification(indices_DHL_all, indices, localisation, seuil_localisation):
 
             if localisation == "ORL":
                 # Machine Learning
@@ -130,7 +130,30 @@ def main():
                 y_pred_prob_DHL = DHL_model_Pelvis.predict(proba_tensor)
                 result_DHL = np.where(y_pred_prob_DHL[:,1]>0.85, 1,0)
                 
+            if localisation == "Générale":
+                # Machine Learning
+                indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
+                df_ML = pandas.DataFrame(indices_norm, index = ['1', '2', '3', '4', '5', '6'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                model_ML_KN_all = load('model_ML_KN_Générale.joblib')
+                y_pred_prob_KN = model_ML_KN_all.predict_proba(indices)
+                df_ML['KN'] = y_pred_prob_KN[:,0]                 
+                model_ML_RFC_all = load('model_ML_RFC_Générale.joblib')
+                y_pred_prob_RFC = model_ML_RFC_all.predict_proba(indices)
+                df_ML['RFC'] = y_pred_prob_RFC[:,0]                
+                model_ML_DTC_all = load('model_ML_DTC_Générale.joblib')
+                y_pred_prob_DTC = model_ML_DTC_all.predict_proba(indices)
+                df_ML['DTC'] = y_pred_prob_DTC[:,0]
+                model_ML_SVC_all = load('model_ML_SVC_Générale.joblib')
+                y_pred_prob_SVC = model_ML_SVC_all.predict_proba(indices)
+                df_ML['SVC'] = y_pred_prob_SVC[:,0]
 
+                # Deep Learning
+                DHL_model_Générale = load('DHL_model_Générale.joblib')
+                proba_tensor=tf.convert_to_tensor(df_ML)
+                y_pred_prob_DHL = DHL_model_Générale.predict(proba_tensor)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.80, 1,0)
+                
+                
             if result_DHL == 1:
                 CQ_result = "Conforme"
             elif result_DHL == 0:
@@ -166,13 +189,13 @@ def main():
  
 
 
-            if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis":
+            if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
                 
                 ## deep_hybrid_learning_classification ##
                 st.write('Pour le modèle de Deep Hybrid Learning : \n') 
-                if deep_hybride_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
+                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
                             st.success('Le résultat est Conforme !')
-                elif deep_hybride_learning_classification(indices,localisation, seuil_localisation) == "Non-conforme":
+                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-conforme":
                             st.warning('Le résultat est Non-conforme !')                       
                 st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")                       
                 st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
