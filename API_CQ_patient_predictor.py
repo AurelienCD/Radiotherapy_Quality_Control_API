@@ -133,7 +133,7 @@ def main():
             if localisation == "Générale":
                 # Machine Learning
                 indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
-                df_ML = pad.DataFrame(indices_norm, index = ['1', '2', '3', '4', '5', '6'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                df_ML = pad.DataFrame(indices_norm, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
                 model_ML_KN_all = load('model_ML_KN_Générale.joblib')
                 y_pred_prob_KN = model_ML_KN_all.predict_proba(indices)
                 df_ML['KN'] = y_pred_prob_KN[:,0]                 
@@ -195,7 +195,7 @@ def main():
                 st.write(indices_DHL_all)
                 indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
                 st.write(indices_norm)
-                df_ML = pad.DataFrame(indices_norm, index = ['1', '2', '3', '4', '5', '6'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                df_ML = pad.DataFrame(indices_norm, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
                 st.write(df_ML)
                 
                 st.write('Pour le modèle de Deep Hybrid Learning : \n') 
