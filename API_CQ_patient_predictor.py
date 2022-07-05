@@ -160,8 +160,9 @@ def main():
                 CQ_result = "Non-conforme"
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
+            test = [CQ_result,indices_norm]
             
-            return CQ_result
+            return test
 
 
 
