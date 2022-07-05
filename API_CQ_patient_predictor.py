@@ -44,7 +44,11 @@ def main():
         test = np.array(indices_list)
         indices = test.reshape(1, -1)
         indices_DHL_all = indices  
-
+        
+        StandardScaler = load('DHL_StandardScaler.joblib')
+        indices_DHL_all
+        indices_DHL_all = StandardScaler.transform(indices_DHL_all)
+        
         StandardScaler = load('StandardScaler_' + str(localisation) + '.joblib')
         indices = StandardScaler.transform(indices)
         
@@ -132,8 +136,7 @@ def main():
                 
             if localisation == "Générale":
                 # Machine Learning
-                indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
-                df_ML = pad.DataFrame(indices_norm, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                df_ML = pad.DataFrame(indices_DHL_all, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
                 model_ML_KN_all = load('model_ML_KN_Générale.joblib')
                 y_pred_prob_KN = model_ML_KN_all.predict_proba(indices)
                 df_ML['KN'] = y_pred_prob_KN[:,0]                 
