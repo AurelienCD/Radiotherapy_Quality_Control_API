@@ -160,9 +160,8 @@ def main():
                 CQ_result = "Non-conforme"
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
-            test = [CQ_result,indices_norm]
-            
-            return test
+                        
+            return CQ_result
 
 
 
@@ -194,6 +193,8 @@ def main():
                 
                 ## deep_hybrid_learning_classification ##
                 st.write(indices_DHL_all)
+                indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
+                st.write(indices_norm)
                 st.write('Pour le modèle de Deep Hybrid Learning : \n') 
                 if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
                             st.success('Le résultat est Conforme !')
