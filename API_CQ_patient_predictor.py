@@ -154,7 +154,7 @@ def main():
                 DHL_model_all = load('DHL_model_Générale.joblib')
                 proba_tensor=tf.convert_to_tensor(df_ML)
                 y_pred_prob_DHL = DHL_model_all.predict(proba_tensor)
-                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.80, 1,0)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.556942, 1,0)
                 
                 
             if result_DHL == 1:
