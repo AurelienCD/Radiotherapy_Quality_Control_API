@@ -45,10 +45,7 @@ def main():
         indices = test.reshape(1, -1)
         indices_DHL_all = indices  
         
-        StandardScaler = load('DHL_StandardScaler.joblib')
-        indices_DHL_all
-        indices_DHL_all = StandardScaler.transform(indices_DHL_all)
-        
+       
         StandardScaler = load('StandardScaler_' + str(localisation) + '.joblib')
         indices = StandardScaler.transform(indices)
         
@@ -135,8 +132,9 @@ def main():
                 result_DHL = np.where(y_pred_prob_DHL[:,1]>0.85, 1,0)
                 
             if localisation == "Générale":
-                # Machine Learning
                 df_ML = pad.DataFrame(indices_DHL_all, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                
+                # Machine Learning
                 model_ML_KN_all = load('model_ML_KN_Générale.joblib')
                 y_pred_prob_KN = model_ML_KN_all.predict_proba(indices)
                 df_ML['KN'] = y_pred_prob_KN[:,0]                 
@@ -151,6 +149,8 @@ def main():
                 df_ML['SVC'] = y_pred_prob_SVC[:,0]
 
                 # Deep Learning
+                StandardScaler = load('DHL_StandardScaler.joblib')
+                df_ML = StandardScaler.transform(df_ML)           
                 DHL_model_all = load('DHL_model_Générale.joblib')
                 proba_tensor=tf.convert_to_tensor(df_ML)
                 y_pred_prob_DHL = DHL_model_all.predict(proba_tensor)
