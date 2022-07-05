@@ -192,12 +192,6 @@ def main():
             if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
                 
                 ## deep_hybrid_learning_classification ##
-                st.write(indices_DHL_all)
-                indices_norm=(indices_DHL_all-indices_DHL_all.min())/(indices_DHL_all.max()-indices_DHL_all.min())
-                st.write(indices_norm)
-                df_ML = pad.DataFrame(indices_norm, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
-                st.write(df_ML)
-                
                 st.write('Pour le modèle de Deep Hybrid Learning : \n') 
                 if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
                             st.success('Le résultat est Conforme !')
