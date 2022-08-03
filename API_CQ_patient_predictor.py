@@ -25,11 +25,15 @@ def main():
     label = "Sélectionner la localisation tumorale"
     options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
-    seuil_localisation = {"Générale": 0.25, "Pelvis": 0.4, "Sein": 0.55, "ORL": 0.3, "Crâne": 0.3, "Thorax": 0.3,}
-            
-    image_ML = Image.open('image_ML_' + str(localisation) +'.png')
-    image_DHL = Image.open('image_DHL.png')
+    seuil_localisation = {"Crâne": 0.3, "Thorax": 0.3,}
+    
+    if localisation == "Crâne" or localisation == "Thorax":
+        image_ML = Image.open('image_ML_' + str(localisation) +'.png')   
 
+    if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
+        image_DHL = Image.open('image_DHL_' + str(localisation) +'.png') 
+        
+        
     try:
         ## Préparation des données
         indices = indices.split()
@@ -39,8 +43,9 @@ def main():
 
         test = np.array(indices_list)
         indices = test.reshape(1, -1)
-
-            
+        indices_DHL_all = indices  
+        
+       
         StandardScaler = load('StandardScaler_' + str(localisation) + '.joblib')
         indices = StandardScaler.transform(indices)
         
@@ -48,6 +53,8 @@ def main():
         for elm in indices[0]:
             indices_finale.append(float(elm))
             
+
+
         def machine_learning_classification(indices_finale, localisation, seuil_localisation):
             ML_model = load('model_ML_' + str(localisation) + '.joblib')
             y_pred_prob = ML_model.predict_proba(indices)
@@ -63,44 +70,100 @@ def main():
             return CQ_result
 
 
-        def deep_hybride_learning_classification(indices):
-            ML_DTC_model = load('model_ML_DTC.joblib')
-            y_pred_prob_DTC = ML_DTC_model.predict_proba(indices)
-            result_DTC = np.where(y_pred_prob_DTC[:,0]>0.8,0,1)
-            predictions_DTC = result_DTC[0]
-            df_ML = pad.DataFrame(predictions_DTC, index = ['1'], columns = ['DTC'])
-            
-            ML_KN_model = load('model_ML_KN.joblib')
-            y_pred_prob_KN = ML_KN_model.predict_proba(indices)
-            result_KN = np.where(y_pred_prob_KN[:,0]>0.8,0,1)
-            predictions_KN = result_KN[0]
-            df_ML['KN'] = predictions_KN
+        def deep_hybride_learning_classification(indices_DHL_all, indices, localisation, seuil_localisation):
 
-            ML_RFC_model = load('model_ML_RFC.sav')
-            y_pred_prob_RFC = ML_RFC_model.predict_proba(indices)
-            result_RFC = np.where(y_pred_prob_RFC[:,0]>0.25,0,1)
-            predictions_RFC = result_RFC[0]
-            df_ML['RFC'] = predictions_RFC
+            if localisation == "ORL":
+                # Machine Learning
+                model_ML_DTC_ORL = load('model_ML_DTC_ORL.joblib')
+                y_pred_prob_DTC = model_ML_DTC_ORL.predict_proba(indices)
+                df_ML = pad.DataFrame(y_pred_prob_DTC[:,0], index = ['1'], columns = ['DTC'])                
+                model_ML_LDA_ORL = load('model_ML_LDA_ORL.joblib')
+                y_pred_prob_LDA = model_ML_LDA_ORL.predict_proba(indices)
+                df_ML['LDA'] = y_pred_prob_LDA[:,0]                
+                model_ML_RFC_ORL = load('model_ML_RFC_ORL.joblib')
+                y_pred_prob_RFC = model_ML_RFC_ORL.predict_proba(indices)
+                df_ML['RFC'] = y_pred_prob_RFC[:,0]
 
-            ML_SVC_model = load('model_ML_SVC.joblib')
-            y_pred_prob_SVC = ML_SVC_model.predict_proba(indices)
-            result_SVC = np.where(y_pred_prob_SVC[:,0]>0.9,0,1)
-            predictions_SVC = result_SVC[0]
-            df_ML['SVC'] = predictions_SVC    
-            
-            DHL_model = load('DHL_model.joblib')
-            indices_tensor=tf.convert_to_tensor(df_ML)
-            y_pred_prob_DHL = DHL_model.predict(indices_tensor)
-            result_DHL = np.where(y_pred_prob_DHL>0.62, 1,0)
-            
+                # Deep Learning
+                DHL_model_ORL = load('DHL_model_ORL.joblib')
+                proba_tensor=tf.convert_to_tensor(df_ML)
+                y_pred_prob_DHL = DHL_model_ORL.predict(proba_tensor)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.82, 1,0)
 
+
+            if localisation == "Sein":           
+                # Machine Learning
+                model_ML_LDA_Sein = load('model_ML_LDA_Sein.joblib')
+                y_pred_prob_LDA = model_ML_LDA_Sein.predict_proba(indices) 
+                df_ML = pad.DataFrame(y_pred_prob_LDA[:,0], index = ['1'], columns = ['LDA'])                               
+                model_ML_RFC_Sein = load('model_ML_RFC_Sein.joblib')
+                y_pred_prob_RFC = model_ML_RFC_Sein.predict_proba(indices)                
+                df_ML['RFC'] = y_pred_prob_RFC[:,0]
+                model_ML_SVC_Sein = load('model_ML_SVC_Sein.joblib')
+                y_pred_prob_SVC = model_ML_SVC_Sein.predict_proba(indices)
+                df_ML['SVC'] = y_pred_prob_SVC[:,0] 
+                
+                # Deep Learning
+                DHL_model_Sein = load('DHL_model_Sein.joblib')
+                proba_tensor=tf.convert_to_tensor(df_ML)
+                y_pred_prob_DHL = DHL_model_Sein.predict(proba_tensor)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.736, 1,0)
+
+
+            if localisation == "Pelvis":
+                # Machine Learning
+                model_ML_RFC_Pelvis = load('model_ML_RFC_Pelvis.joblib')
+                y_pred_prob_RFC = model_ML_RFC_Pelvis.predict_proba(indices) 
+                df_ML = pad.DataFrame(y_pred_prob_RFC[:,0], index = ['1'], columns = ['RFC'])
+                model_ML_KN_Pelvis = load('model_ML_KN_Pelvis.joblib')
+                y_pred_prob_KN = model_ML_KN_Pelvis.predict_proba(indices)
+                df_ML['KN'] = y_pred_prob_KN[:,0] 
+                model_ML_SVC_Pelvis = load('model_ML_SVC_Pelvis.joblib')
+                y_pred_prob_SVC = model_ML_SVC_Pelvis.predict_proba(indices) 
+                df_ML['SVC'] = y_pred_prob_SVC[:,0]
+                model_ML_DTC_Pelvis = load('model_ML_DTC_Pelvis.joblib')
+                y_pred_prob_DTC = model_ML_DTC_Pelvis.predict_proba(indices) 
+                df_ML['DTC'] = y_pred_prob_DTC[:,0]
+
+                # Deep Learning
+                DHL_model_Pelvis = load('DHL_model_Pelvis.joblib')
+                proba_tensor=tf.convert_to_tensor(df_ML)
+                y_pred_prob_DHL = DHL_model_Pelvis.predict(proba_tensor)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.85, 1,0)
+                
+            if localisation == "Générale":
+                df_ML = pad.DataFrame(indices_DHL_all, index = ['1'], columns = ['SAS10', 'MCSv', 'LT', 'LTMCS', 'AAV', 'LSV'])
+                
+                # Machine Learning
+                model_ML_KN_all = load('model_ML_KN_Générale.joblib')
+                y_pred_prob_KN = model_ML_KN_all.predict_proba(indices)
+                df_ML['KN'] = y_pred_prob_KN[:,0]                 
+                model_ML_RFC_all = load('model_ML_RFC_Générale.joblib')
+                y_pred_prob_RFC = model_ML_RFC_all.predict_proba(indices)
+                df_ML['RFC'] = y_pred_prob_RFC[:,0]                
+                model_ML_DTC_all = load('model_ML_DTC_Générale.joblib')
+                y_pred_prob_DTC = model_ML_DTC_all.predict_proba(indices)
+                df_ML['DTC'] = y_pred_prob_DTC[:,0]
+                model_ML_SVC_all = load('model_ML_SVC_Générale.joblib')
+                y_pred_prob_SVC = model_ML_SVC_all.predict_proba(indices)
+                df_ML['SVC'] = y_pred_prob_SVC[:,0]
+
+                # Deep Learning
+                StandardScaler = load('DHL_StandardScaler.joblib')
+                df_ML = StandardScaler.transform(df_ML)           
+                DHL_model_all = load('DHL_model_Générale.joblib')
+                proba_tensor=tf.convert_to_tensor(df_ML)
+                y_pred_prob_DHL = DHL_model_all.predict(proba_tensor)
+                result_DHL = np.where(y_pred_prob_DHL[:,1]>0.556942, 1,0)
+                
+                
             if result_DHL == 1:
                 CQ_result = "Conforme"
             elif result_DHL == 0:
                 CQ_result = "Non-conforme"
             else:
                 CQ_result = "Problème de modélisation, better call ACD"
-            
+                        
             return CQ_result
 
 
@@ -113,27 +176,32 @@ def main():
             for percent_complete in range(100):
                  time.sleep(0.013)
                  my_bar.progress(percent_complete + 1)
-            
-            ## machine_learning_classification ##
-            st.write('Pour le modèle de Machine Learning : \n')    
-            if machine_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
-                        st.success('Le résultat est Conforme !')
-            elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
-                        st.warning('Le résultat est Non-conforme !')                       
-            st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")
-            
-            if localisation == "ORL":
-                        st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (DecisionTreeClassifier)')
-            else:
-                        st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
-            
-            st.write('Pour le modèle de Deep Hybrid Learning : \n') 
-            if deep_hybride_learning_classification(indices) == "Conforme":
-                        st.success('Le résultat est Conforme !')
-            elif deep_hybride_learning_classification(indices) == "Non-conforme":
-                        st.warning('Le résultat est Non-conforme !')                       
 
-            st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (MultiLayerPerceptron)')
+
+
+            if localisation == "Crâne" or localisation == "Thorax":
+               
+                ## machine_learning_classification ##
+                st.write('Pour le modèle de Machine Learning : \n')    
+                if machine_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
+                            st.success('Le résultat est Conforme !')
+                elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
+                            st.warning('Le résultat est Non-conforme !')                       
+                st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")              
+                st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
+ 
+
+
+            if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
+                
+                ## deep_hybrid_learning_classification ##
+                st.write('Pour le modèle de Deep Hybrid Learning : \n') 
+                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
+                            st.success('Le résultat est Conforme !')
+                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-conforme":
+                            st.warning('Le résultat est Non-conforme !')                       
+                st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")                       
+                st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
 
             
     except Exception as e:
