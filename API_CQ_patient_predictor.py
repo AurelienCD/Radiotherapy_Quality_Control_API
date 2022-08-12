@@ -17,14 +17,24 @@ def main():
 
     
     
-    st.title('Prédiction du résultat du contrôle qualité patient')
-    st.write("Rentrer les indices de complexité")
+    st.title('Patient specific quality assurance prediction')
+    st.write("Please enter the complexity indexes")
     
-    post = st.text_input("(dans le même format que l'exemple ci-dessous, avec SAS10 MCSv    LT  LTMCS   AAV LSV) : ", "0.723   0.069  30.6298  0.0584  0.094  0.7269")
+    post = st.text_input("(in the same format as the exemple below, with SAS10 MCSv    LT  LTMCS   AAV LSV) : ", "0.723   0.069  30.6298  0.0584  0.094  0.7269")
     indices = post
-    label = "Sélectionner la localisation tumorale"
-    options = ["Générale", "Pelvis", "Sein", "ORL", "Crâne", "Thorax"]
+    label = "Select the tumour location"
+    options = ["All", "Pelvis", "Breast", "H&N", "Brain", "Thorax"]
     localisation = st.radio(label, options, index=0, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False)
+    
+    if localisation == "All":
+        localisation = "Générale"
+    elif localisation == "Breast":
+        localisation = "Sein"
+    elif localisation == "H&N":
+        localisation = "ORL"
+    elif localisation == "Brain":
+        localisation = "Crâne"
+
     seuil_localisation = {"Crâne": 0.3, "Thorax": 0.3,}
     
     if localisation == "Crâne" or localisation == "Thorax":
@@ -61,11 +71,11 @@ def main():
             result = np.where(y_pred_prob[:,0]>seuil_localisation[localisation],0,1)
             predictions = result[0]
             if predictions == 1:
-                CQ_result = "Conforme"
+                CQ_result = "Conformance CQ"
             elif predictions == 0:
-                CQ_result = "Non-conforme"
+                CQ_result = "Non-Conformance CQ"
             else:
-                CQ_result = "Problème de modélisation, better call ACD"
+                CQ_result = "Modelisation issue, better call ACD : a.corroyer-dulmont@baclesse.unicancer.fr"
                 
             return CQ_result
 
@@ -158,17 +168,17 @@ def main():
                 
                 
             if result_DHL == 1:
-                CQ_result = "Conforme"
+                CQ_result = "Conformance CQ"
             elif result_DHL == 0:
-                CQ_result = "Non-conforme"
+                CQ_result = "Non-Conformance CQ"
             else:
-                CQ_result = "Problème de modélisation, better call ACD"
+                CQ_result = "Modelisation issue, better call ACD : a.corroyer-dulmont@baclesse.unicancer.fr"
                         
             return CQ_result
 
 
 
-        predict_btn = st.button('Prédire')
+        predict_btn = st.button('Predict')
         if predict_btn:
             pred = None
             st.empty()    
@@ -182,12 +192,12 @@ def main():
             if localisation == "Crâne" or localisation == "Thorax":
                
                 ## machine_learning_classification ##
-                st.write('Pour le modèle de Machine Learning : \n')    
-                if machine_learning_classification(indices,localisation, seuil_localisation) == "Conforme":
-                            st.success('Le résultat est Conforme !')
-                elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-conforme":
-                            st.warning('Le résultat est Non-conforme !')                       
-                st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")              
+                st.write('For the Machine Learning model: \n')    
+                if machine_learning_classification(indices,localisation, seuil_localisation) == "Conformance CQ":
+                            st.success('Prediction result is conformance CQ !')
+                elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-Conformance CQ":
+                            st.warning('Prediction result is Non-conformance CQ !')                       
+                st.write("NB : Non-conformance result means a prediction of a significantly different gamma mean and gamma index below 95%")              
                 st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
  
 
@@ -195,18 +205,18 @@ def main():
             if localisation == "ORL" or localisation == "Sein" or localisation == "Pelvis" or localisation == "Générale":
                 
                 ## deep_hybrid_learning_classification ##
-                st.write('Pour le modèle de Deep Hybrid Learning : \n') 
+                st.write('For the Deep Hybrid Learning model : \n') 
                 if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
-                            st.success('Le résultat est Conforme !')
+                            st.success('Prediction result is conformance CQ !')
                 elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-conforme":
-                            st.warning('Le résultat est Non-conforme !')                       
-                st.write("NB : un résultat non-conforme correspond à une prédiction que le gamma moyen soit significativement au dessus de la moyenne et que le gamma index soit inférieur à 95%")                       
+                            st.warning('Prediction result is Non-conformance CQ !')                       
+                st.write("NB : Non-conformance result means a prediction of a significantly different gamma mean and gamma index below 95%")                       
                 st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
 
             
     except Exception as e:
-        st.write("Problème de format des données d'entrée ou de modélisation, better call ACD (57.68)")
-        st.write("Message d'erreur : " + str(e))
+        st.write("Modelisation issue, better call ACD : 57.68 or a.corroyer-dulmont@baclesse.unicancer.fr")
+        st.write("Error message : " + str(e))
 
 #####  get the error :
 
