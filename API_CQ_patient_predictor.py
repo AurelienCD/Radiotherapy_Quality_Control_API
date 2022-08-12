@@ -206,9 +206,9 @@ def main():
                 
                 ## deep_hybrid_learning_classification ##
                 st.write('For the Deep Hybrid Learning model : \n') 
-                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conforme":
+                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conformance CQ":
                             st.success('Prediction result is conformance CQ !')
-                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-conforme":
+                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-Conformance CQ":
                             st.warning('Prediction result is Non-conformance CQ !')                       
                 st.write("NB : Non-conformance result means a prediction of a significantly different gamma mean and gamma index below 95%")                       
                 st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
