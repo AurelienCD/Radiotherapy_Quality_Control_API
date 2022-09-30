@@ -71,9 +71,9 @@ def main():
             result = np.where(y_pred_prob[:,0]>seuil_localisation[localisation],0,1)
             predictions = result[0]
             if predictions == 1:
-                CQ_result = "Conformance CQ"
+                CQ_result = "Conformance QC"
             elif predictions == 0:
-                CQ_result = "Non-Conformance CQ"
+                CQ_result = "Non-Conformance QC"
             else:
                 CQ_result = "Modelisation issue, better call ACD : a.corroyer-dulmont@baclesse.unicancer.fr"
                 
@@ -168,9 +168,9 @@ def main():
                 
                 
             if result_DHL == 1:
-                CQ_result = "Conformance CQ"
+                CQ_result = "Conformance QC"
             elif result_DHL == 0:
-                CQ_result = "Non-Conformance CQ"
+                CQ_result = "Non-Conformance QC"
             else:
                 CQ_result = "Modelisation issue, better call ACD : a.corroyer-dulmont@baclesse.unicancer.fr"
                         
@@ -193,9 +193,9 @@ def main():
                
                 ## machine_learning_classification ##
                 st.write('For the Machine Learning model: \n')    
-                if machine_learning_classification(indices,localisation, seuil_localisation) == "Conformance CQ":
+                if machine_learning_classification(indices,localisation, seuil_localisation) == "Conformance QC":
                             st.success('Prediction result is conformance CQ !')
-                elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-Conformance CQ":
+                elif machine_learning_classification(indices, localisation, seuil_localisation) == "Non-Conformance QC":
                             st.warning('Prediction result is Non-conformance CQ !')                       
                 st.write("NB : Non-conformance result means a prediction of a significantly different gamma mean and gamma index below 95%")              
                 st.image(image_ML, caption='ROC curve and confusion matrix for the Machine Learning model (RandomForestClassifier)')
@@ -206,9 +206,9 @@ def main():
                 
                 ## deep_hybrid_learning_classification ##
                 st.write('For the Deep Hybrid Learning model : \n') 
-                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conformance CQ":
+                if deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Conformance QC":
                             st.success('Prediction result is conformance CQ !')
-                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-Conformance CQ":
+                elif deep_hybride_learning_classification(indices_DHL_all, indices,localisation, seuil_localisation) == "Non-Conformance QC":
                             st.warning('Prediction result is Non-conformance CQ !')                       
                 st.write("NB : Non-conformance result means a prediction of a significantly different gamma mean and gamma index below 95%")                       
                 st.image(image_DHL, caption='ROC curve and confusion matrix for the Deep Hybrid Learning model (Machine Learning models and then a MultiLayerPerceptron)')
