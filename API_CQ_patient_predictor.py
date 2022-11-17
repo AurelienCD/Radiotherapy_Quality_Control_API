@@ -9,7 +9,7 @@ from tensorflow import keras
 import time
 
 ## TO DO #######
-## PCA and TSNE representation
+## PCA and TSNE representation ##
 
 
 def main():
