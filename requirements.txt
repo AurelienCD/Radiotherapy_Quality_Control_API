@@ -4,4 +4,4 @@ numpy==1.21.6
 pillow
 scikit-learn==1.0.2
 tensorflow==2.8.0
-protobuf==3.2
+protobuf==3.9.2
